@@ -3,68 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>pulkitlinks</title>
+    <title>pulkitlinks - PewDiePie Theme</title>
     <style>
-        :root {
-            --bg-color: #1e1e1e;
-            --text-color: #ffffff;
-            --card-bg: #2a2a2a;
-            --link-bg: #007bff;
-            --link-hover: #0056b3;
-        }
+        /* PewDiePie Style */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: #000;
+            color: #fff;
             padding: 20px;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/e4/PewDiePie_Banner.svg'); /* PewDiePie Wave Background */
+            background-size: cover;
+            background-attachment: fixed;
         }
         h1 {
-            color: #f8f8f8;
+            color: #ff0000; /* PewDiePie Red */
+            font-size: 40px;
+            text-transform: uppercase;
         }
-        .link-container {
+        .container {
             max-width: 600px;
             margin: 20px auto;
-            background: var(--card-bg);
+            background: rgba(0, 0, 0, 0.8); /* Semi-transparent Black */
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-        }
-        h2 {
-            border-bottom: 2px solid #fff;
-            padding-bottom: 5px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
         }
         .link {
-            display: block;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 10px;
             margin: 5px 0;
-            background: var(--link-bg);
+            background: #ff0000;
             color: white;
             text-decoration: none;
             border-radius: 5px;
-            transition: background 0.3s;
+            font-weight: bold;
+            transition: transform 0.2s, background 0.3s;
         }
         .link:hover {
-            background: var(--link-hover);
+            background: #c70000;
+            transform: scale(1.05);
+        }
+        .btn {
+            margin-left: 10px;
+            background: black;
+            border: 2px solid #ff0000;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background: #ff0000;
+            color: black;
+        }
+        input, button {
+            width: 90%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 2px solid #ff0000;
+            border-radius: 5px;
+            font-size: 16px;
+            background: black;
+            color: white;
+        }
+        input::placeholder {
+            color: #ff6666;
+        }
+        button {
+            background: #ff0000;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #c70000;
         }
     </style>
 </head>
 <body>
     <h1>pulkitlinks</h1>
-    <p>My personal link collection</p>
-    
-    <div class="link-container">
-        <h2>📚 Learning</h2>
-        <a href="https://developer.mozilla.org" class="link" target="_blank">MDN Web Docs</a>
-        <a href="https://www.w3schools.com" class="link" target="_blank">W3Schools</a>
+    <p>Stay Epic. Store Your Links.</p>
 
-        <h2>💼 Work & Productivity</h2>
-        <a href="https://notion.so" class="link" target="_blank">Notion</a>
-        <a href="https://todoist.com" class="link" target="_blank">Todoist</a>
+    <!-- Search Bar -->
+    <input type="text" id="search" placeholder="🔍 Search links..." onkeyup="filterLinks()">
 
-        <h2>🎵 Entertainment</h2>
-        <a href="https://spotify.com" class="link" target="_blank">Spotify</a>
-        <a href="https://youtube.com" class="link" target="_blank">YouTube</a>
+    <div class="container">
+        <h2>📌 Your Links</h2>
+        <div id="link-list">
+            <!-- Links will be added here dynamically -->
+        </div>
     </div>
+
+    <!-- Add Link Form -->
+    <div class="container">
+        <h2>Add a New Link</h2>
+        <input type="text" id="linkName" placeholder="🔥 Link Name">
+        <input type="url" id="linkURL" placeholder="https://example.com">
+        <button onclick="addLink()">💾 Add Link</button>
+    </div>
+
+    <script>
+        // Load links from local storage
+        document.addEventListener("DOMContentLoaded", loadLinks);
+
+        function addLink() {
+            let name = document.getElementById("linkName").value;
+            let url = document.getElementById("linkURL").value;
+            if (!name || !url) {
+                alert("👀 Please enter both a name and a valid URL.");
+                return;
+            }
+
+            let links = JSON.parse(localStorage.getItem("links")) || [];
+            links.push({ name, url });
+            localStorage.setItem("links", JSON.stringify(links));
+            document.getElementById("linkName").value = "";
+            document.getElementById("linkURL").value = "";
+            loadLinks();
+        }
+
+        function loadLinks() {
+            let linkList = document.getElementById("link-list");
+            linkList.innerHTML = "";
+            let links = JSON.parse(localStorage.getItem("links")) || [];
+
+            links.forEach((link, index) => {
+                let linkItem = document.createElement("div");
+                linkItem.className = "link";
+                linkItem.innerHTML = `
+                    <a href="${link.url}" target="_blank">${link.name}</a>
+                    <button class="btn" onclick="deleteLink(${index})">❌</button>
+                `;
+                linkList.appendChild(linkItem);
+            });
+        }
+
+        function deleteLink(index) {
+            let links = JSON.parse(localStorage.getItem("links")) || [];
+            links.splice(index, 1);
+            localStorage.setItem("links", JSON.stringify(links));
+            loadLinks();
+        }
+
+        function filterLinks() {
+            let searchValue = document.getElementById("search").value.toLowerCase();
+            let links = document.querySelectorAll(".link");
+            links.forEach(link => {
+                let text = link.textContent.toLowerCase();
+                link.style.display = text.includes(searchValue) ? "flex" : "none";
+            });
+        }
+    </script>
 </body>
 </html>
