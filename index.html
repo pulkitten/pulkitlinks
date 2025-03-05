@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pulkitlinks</title>
+    <style>
+        :root {
+            --bg-color: #1e1e1e;
+            --text-color: #ffffff;
+            --card-bg: #2a2a2a;
+            --link-bg: #007bff;
+            --link-hover: #0056b3;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px;
+        }
+        h1 {
+            color: #f8f8f8;
+        }
+        .link-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+        h2 {
+            border-bottom: 2px solid #fff;
+            padding-bottom: 5px;
+        }
+        .link {
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            background: var(--link-bg);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .link:hover {
+            background: var(--link-hover);
+        }
+    </style>
+</head>
+<body>
+    <h1>pulkitlinks</h1>
+    <p>My personal link collection</p>
+    
+    <div class="link-container">
+        <h2>📚 Learning</h2>
+        <a href="https://developer.mozilla.org" class="link" target="_blank">MDN Web Docs</a>
+        <a href="https://www.w3schools.com" class="link" target="_blank">W3Schools</a>
+
+        <h2>💼 Work & Productivity</h2>
+        <a href="https://notion.so" class="link" target="_blank">Notion</a>
+        <a href="https://todoist.com" class="link" target="_blank">Todoist</a>
+
+        <h2>🎵 Entertainment</h2>
+        <a href="https://spotify.com" class="link" target="_blank">Spotify</a>
+        <a href="https://youtube.com" class="link" target="_blank">YouTube</a>
+    </div>
+</body>
+</html>
